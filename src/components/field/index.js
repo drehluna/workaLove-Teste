@@ -16,7 +16,7 @@ export default function Field({ list, options, text, type, placeholder, componen
             <div className="InputUserWrapper">
                 <div className="InputUserContainer">
                     <InputComponent className={meta.error && meta.touched ? "InputUserError" : "InputUser"} {...inputProps} {...props} placeholder={placeholder} type={type} list={list} />
-                    {console.log(list)}
+                    
                     {list ? (<datalist id={list}>
                         {options.map((value) => <option value={value} />)}
                     </datalist>) : null}

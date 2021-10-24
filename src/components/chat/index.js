@@ -30,11 +30,18 @@ export default function Chat() {
 
     useEffect(ScrollToFinalDiv, [step]);
 
+    const [userInfo, setUserInfo] = useState([
+        {
+            name: '',
+        }
+    ])
+
 
     const [chatQuestions, setChatQuestion] = useState([
         {
-            question: 'Olá, eu sou ChatNilson, tudo bem? Para começarmos, preciso saber seu nome.',
+            question: "Olá, eu sou ChatNilson, tudo bem? Para começarmos, preciso saber seu nome.",
             awnser: ''
+            
         },
     ])
 
@@ -43,52 +50,66 @@ export default function Chat() {
 
         { name: 'nomeesobrenome', type: '', placeholder: 'Digite seu nome', component: 'input', options: [], list: "" },
         { name: 'cidade', type: '', placeholder: 'Qual sua cidade', component: 'input', options: ['python', 'javascript', 'java'], list: "city-list" },
-        { name: 'uf', type: '', placeholder: 'Qual seu estado', component: 'select', options: [], list: "" },
+        { name: 'uf', type: '', placeholder: 'Qual seu estado', component: 'input', options: ['python', 'javascript', 'java'], list: "city-list"  },
         { name: 'data', type: 'Data', placeholder: '', component: 'input', options: [], list: "" },
         { name: 'email', type: 'email', placeholder: '', component: 'input', options: [], list: "" },
     ]
 
+
+    const Questions = [
+
+       
+        {
+            question: `Que satisfação ${userInfo.name}. Agora que sei seu nome, qual cidade que você mora`,
+            awnser: '',
+            key: 'city'
+        },
+        {
+            question: 'Selecione o estado onde você mora',
+            awnser: '',
+            key: 'uf'
+        },
+        {
+            question: 'Legal, agora que sabemos sua cidade e estado. Quando foi que você nasceu',
+            awnser: '',
+            key: 'data'
+        },
+        {
+            question: `Agora me fala teu e-mail por gentileza ${userInfo.name}`,
+            awnser: '',
+            key: 'email'
+        },
+
+        {
+            question: 'Você finalizou o teste, faça uma avaliação sobre o processo que realizou até aqui. Nós agradecemos.'
+        },
+    ]
+
+    const getKey = () => {
+       return Questions[step].key
+    }
+
+    const saveInfo = (key, value) => {
+        setUserInfo({...userInfo, [key]: value})
+        
+    }
+
+    
+
     function onSubmit(values) {
 
-        const perguntas = [
-
-            `Que satisfação ${values.nomeesobrenome}. Agora que sei seu nome, qual cidade que você mora`,
-            `Que satisfação. Agora que sei seu nome, qual cidade que você mora 2`,
-            `Que satisfação. Agora que sei seu nome, qual cidade que você mora 3`,
-            `Que satisfação. Agora que sei seu nome, qual cidade que você mora 4`,
-            `Que satisfação. Agora que sei seu nome, qual cidade que você mora 5`,
-        ]
-
-
-        if (step === 5) {
-            return
-        }
+        
+        saveInfo(getKey(), values[DataToInput[step].name])
 
         chatQuestions[step].awnser = values[DataToInput[step].name]
 
-
-        let newQuestion = { question: perguntas[step], awnser: '' }
-
-
-
+        let newQuestion = { question: Questions[step].question, awnser: '' }
         chatQuestions.push(newQuestion)
-        console.log(chatQuestions)
         setChatQuestion(chatQuestions)
+
         setStep(step + 1)
-
         setSchema(schemas[step + 1])
-
-
-
-
-
-
-
-
     }
-
-
-
 
     console.log(step)
 
