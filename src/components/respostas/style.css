@@ -1,0 +1,13 @@
+
+.RepostasWrapper {
+    display: flex;
+    justify-content: right;
+}
+
+.Resposta {
+
+
+    padding: 14px;
+    background-color: aqua;
+
+}

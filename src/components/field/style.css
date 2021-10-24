@@ -1,0 +1,44 @@
+
+.InputUserWrapper {
+   
+    margin-right: 10px;
+    margin-bottom: 5px;
+    text-align: right;
+}
+
+.InputUserContainer {
+    display: flex;
+    position: absolute;
+    top: 30em;
+    left: 5em;
+
+}
+
+.InputUserError {
+    border: 1px solid #FF0000;
+    
+}
+
+input,select {
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 4px;
+    border: 1px solid #e3e5e7;
+    width: 30em;
+}
+
+input:focus {
+    outline: none;
+    border: 1px solid #77D970;
+}
+
+.InputUserWrapper span {
+
+    font-size: 15px;
+    color: #FF0000;
+    margin-right: 2em;
+    position: absolute;
+    top: 30em;
+    left: 5em;
+}
+

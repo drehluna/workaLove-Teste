@@ -1,0 +1,22 @@
+.AvatarTextWrapper {
+    padding: 15px;
+}
+
+.ContainerAvatarText {
+   display: flex;
+   align-items: center;
+}
+
+.ContainerAvatarText img {
+    border-radius: 8px;
+    background-color: #F2F5F9;
+}
+
+.ContainerAvatarText span{
+    padding: 14px;
+    background-color: #77D970;
+    margin-left: 10px;
+    border-radius: 8px;
+    font-size: 15px;
+    max-width: 15em;
+}
