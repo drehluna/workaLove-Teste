@@ -1,14 +1,14 @@
-import react from 'react'
+
 import { useField } from 'formik'
+import { array } from 'yup/lib/locale';
 
 import './style.css'
-import AvatarText from '../avatarAndText';
 
 export default function Field({ list, options, text, type, placeholder, component: InputComponent, ...props }) {
 
     const [inputProps, meta] = useField(props)
 
-
+    let CitySiglaValue = ''
 
     return (
         <>
@@ -17,10 +17,33 @@ export default function Field({ list, options, text, type, placeholder, componen
                 <div className="InputUserContainer">
                     <InputComponent className={meta.error && meta.touched ? "InputUserError" : "InputUser"} {...inputProps} {...props} placeholder={placeholder} type={type} list={list} />
                     
-                    {list ? (<datalist id={list}>
+                    {console.log(options)}
+
+                    {list && options ?
+                    
+                    (<datalist id={list}>
+
+                        
+                        
+                        {typeof(options[0]) !== 'object' ? options.map((value) => <option value={value}/>) : options[0].map((value) => 
+                        
+                            (<>
+                            {CitySiglaValue = value.sigla ? `${value.sigla}/${value.nome}` : value.nome}
+                            <option value={CitySiglaValue}/>
+                            </>)
+
+
+                        ) }
+
+                    </datalist>) 
+                    
+                    : null}
+
+
+                    {/* {list ? (<datalist id={list}>
                         {options.map((value) => <option value={value} />)}
-                    </datalist>) : null}
-                    <button type="submit">Enviar</button>
+                    </datalist>) : null} */}
+                    <button type="submit"></button>
                 </div>
 
                 {meta.error && meta.touched ? <span>{meta.error}</span> : null}

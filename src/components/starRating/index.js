@@ -1,5 +1,6 @@
 import './style.css'
-import react, { useState } from 'react'
+import { useContext, useState } from 'react'
+import { StarRatingContext } from '../../context/starRatingContext';
 
 const Star = ({ marked, starId }) => {
     return (
@@ -10,7 +11,7 @@ const Star = ({ marked, starId }) => {
 };
 
 const StarRating = ({ value, values }) => {
-    const [rating, setRating] = useState(parseInt(value) || 0);
+    const {rating, setRating} = useContext(StarRatingContext)
     const [selection, setSelection] = useState(0);
 
     // console.log('StarRating',values)

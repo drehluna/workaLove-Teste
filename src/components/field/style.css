@@ -11,6 +11,7 @@
     position: absolute;
     top: 30em;
     left: 5em;
+    align-items: center;
 
 }
 
@@ -19,13 +20,35 @@
     
 }
 
-input,select {
-    padding: 10px;
+input {
+    padding: 15px;
     margin-right: 10px;
     border-radius: 4px;
     border: 1px solid #e3e5e7;
-    width: 30em;
+    width: 35em;
 }
+
+.InputUserContainer button {
+    background-image: url('./send.jpg');
+    background-position: center;
+    background-size: 50px;
+
+    border: none;
+
+    width: 40px;
+    height: 40px;
+
+    margin-left: -60px;
+}
+
+.InputUserContainer button:hover {
+    transform: scale(1.1);
+}
+
+.InputUserContainer button:active {
+    transform: scale(0.8);
+}
+
 
 input:focus {
     outline: none;
@@ -41,4 +64,17 @@ input:focus {
     top: 30em;
     left: 5em;
 }
+
+@media (max-width: 760px) {
+    .InputUserContainer {
+        left: 1em;
+    }
+
+    input {
+        width: 20em;
+    }
+    .InputUserWrapper span {
+        left: 2em;
+    }
+} 
 

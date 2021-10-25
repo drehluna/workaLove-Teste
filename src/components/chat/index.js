@@ -11,61 +11,49 @@ import stepFour from '../../schemas/stepFour';
 import stepUf from '../../schemas/stepUf'
 import AvatarText from '../avatarAndText';
 import Respostas from '../respostas';
+import { loadState, loadUfs } from '../../api/api';
 
 
 export default function Chat() {
 
     const [step, setStep] = useState(0)
 
-    const schemas = [stepOne, stepTwo, stepUf, stepTree, stepFour]
+    const [uf] = useState([])
 
-
-    const [currentSchema, setSchema] = useState(schemas[step])
+    const [state] = useState([])
 
     const endDiv = useRef(null)
-
     const ScrollToFinalDiv = () => {
         endDiv.current.scrollIntoView({ behavior: "smooth" })
     }
+    
+    const schemas = [stepOne,stepUf ,stepTwo, stepTree, stepFour]
 
-    useEffect(ScrollToFinalDiv, [step]);
+    const [currentSchema, setSchema] = useState(schemas[step])
 
-    const [userInfo, setUserInfo] = useState([
-        {
-            name: '',
-        }
-    ])
-
-
-    const [chatQuestions, setChatQuestion] = useState([
-        {
-            question: "Olá, eu sou ChatNilson, tudo bem? Para começarmos, preciso saber seu nome.",
-            awnser: ''
-            
-        },
-    ])
-
+    const [userInfo, setUserInfo] = useState({name: ''})
+    const [history] = useState([])
 
     const DataToInput = [
-
         { name: 'nomeesobrenome', type: '', placeholder: 'Digite seu nome', component: 'input', options: [], list: "" },
-        { name: 'cidade', type: '', placeholder: 'Qual sua cidade', component: 'input', options: ['python', 'javascript', 'java'], list: "city-list" },
-        { name: 'uf', type: '', placeholder: 'Qual seu estado', component: 'input', options: ['python', 'javascript', 'java'], list: "city-list"  },
-        { name: 'data', type: 'Data', placeholder: '', component: 'input', options: [], list: "" },
+        { name: 'uf', type: '', placeholder: 'Qual seu estado', component: 'input', options: uf, list: "city-list"  },
+        { name: 'cidade', type: '', placeholder: 'Qual sua cidade', component: 'input', options: state, list: "city-list" },
+        { name: 'data', type: 'date', placeholder: '', component: 'input', options: [], list: "" },
         { name: 'email', type: 'email', placeholder: '', component: 'input', options: [], list: "" },
     ]
-
-
     const Questions = [
-
-       
+        {
+            question: `Olá, eu sou ChatNilson, tudo bem? Para começarmos, preciso saber seu nome.`,
+            awnser: '',
+            key: 'name'
+        },
         {
             question: `Que satisfação ${userInfo.name}. Agora que sei seu nome, qual cidade que você mora`,
             awnser: '',
             key: 'city'
         },
         {
-            question: 'Selecione o estado onde você mora',
+            question: 'Me informe o estado que você mora',
             awnser: '',
             key: 'uf'
         },
@@ -75,15 +63,17 @@ export default function Chat() {
             key: 'data'
         },
         {
-            question: `Agora me fala teu e-mail por gentileza ${userInfo.name}`,
+            question: `Agora me fala teu e-mail por gentileza`,
             awnser: '',
             key: 'email'
         },
-
         {
             question: 'Você finalizou o teste, faça uma avaliação sobre o processo que realizou até aqui. Nós agradecemos.'
         },
     ]
+
+    
+
 
     const getKey = () => {
        return Questions[step].key
@@ -94,24 +84,56 @@ export default function Chat() {
         
     }
 
-    
+    const chatHistory = (value) => {
+        history.push({question: Questions[step].question, awnser: value})
+    }
 
-    function onSubmit(values) {
-
-        
-        saveInfo(getKey(), values[DataToInput[step].name])
-
-        chatQuestions[step].awnser = values[DataToInput[step].name]
-
-        let newQuestion = { question: Questions[step].question, awnser: '' }
-        chatQuestions.push(newQuestion)
-        setChatQuestion(chatQuestions)
-
-        setStep(step + 1)
+    const nextSchema = () => {
         setSchema(schemas[step + 1])
     }
 
+    const nextStep = () => {
+        setStep(step + 1)
+    }
+
+    const hasMoreInfoInput = () => {
+        return getKey() !== undefined
+    }
+
+    useEffect(async () => {
+
+        const ufData = await loadUfs()
+        uf.push(ufData)
+        
+    }
+    , [])
+
+    useEffect(ScrollToFinalDiv, [step]);
+
+    useEffect(async () => {
+
+        if(userInfo.city) {
+            console.log('entrou aqui')
+            const stateData = await loadState(userInfo.city)
+            state.push(stateData)
+            console.log(state[0][0].nome)
+        }
+
+    }
+    , [userInfo])
+
+    
+
+    function onSubmit(values) {
+        saveInfo(getKey(), values[DataToInput[step].name])
+        chatHistory(values[DataToInput[step].name])
+        nextStep()
+        nextSchema()
+    }
+
     console.log(step)
+
+    console.log(userInfo)
 
 
 
@@ -139,11 +161,14 @@ export default function Chat() {
 
                             <div className="teste" >
 
-                                {chatQuestions.map((value, index) => <div  key={index}>
-                                    <AvatarText text={value.question} />
-                                    {value.awnser ? <Respostas text={value.awnser} /> : null}
+                                {history.map((value, index) => (
+                                    <div key={index}>
+                                    <AvatarText text={value.question}/>
+                                    <Respostas text={value.awnser}/>
+                                    </div>
+                                ))}
+                                <AvatarText text={Questions[step].question}/>
 
-                                </div>)}
 
                                 <div  ref={endDiv}/>
 
@@ -151,7 +176,7 @@ export default function Chat() {
 
 
 
-                            {step === 5 ? <StarRating /> :
+                            {!hasMoreInfoInput() ? <StarRating /> :
 
                                 <Field
 
