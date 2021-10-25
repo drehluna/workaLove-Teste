@@ -47,7 +47,7 @@ export default function Chat() {
             question: `Que satisfação ${userInfo.name}. Agora que sei seu nome, qual estado que você mora`,
             key: 'uf',
             inputMetaData: {
-                name: 'uf', type: '', placeholder: 'Qual seu estado', component: 'input', options: uf, list: "city-list"
+                name: 'uf', type: '', placeholder: 'Qual seu estado', component: 'input', options: uf, list: "state-list"
             }
         },
         {
@@ -105,9 +105,7 @@ export default function Chat() {
     }
 
     useEffect( () => {
-
         loadUfs().then(response => setUf((uf) => [...uf, response]))
-        
     }
     , [])
 
