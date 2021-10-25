@@ -14,7 +14,6 @@ const StarRating = ({ value, userinfos, saveInfo }) => {
 
     const [rating, setRating] = useState(parseInt(value) || 0);
     const [selection, setSelection] = useState(0);
-
     const [send, setSend] = useState(false)
 
     useEffect(() => {
@@ -26,8 +25,7 @@ const StarRating = ({ value, userinfos, saveInfo }) => {
         apiMock.post('FinalData', userinfos)
         setSend(true)
     }
-
-
+    
     const hoverOver = event => {
         let val = 0;
         if (event && event.target && event.target.getAttribute('data-star-id'))
@@ -35,7 +33,6 @@ const StarRating = ({ value, userinfos, saveInfo }) => {
         setSelection(val);
     };
     return (
-
         <div className="StarWrapper">
             <div className="StarContainer"
                 onMouseOut={() => hoverOver(null)}
@@ -50,7 +47,6 @@ const StarRating = ({ value, userinfos, saveInfo }) => {
                     />
                 ))}
             </div>
-
             {send ? <span className="SpanFinalizado">Suas respostas foram salvas, obrigado.</span>
                 : <button onClick={onSubmit} className="StarSendButton">Enviar</button>}
         </div>

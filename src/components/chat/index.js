@@ -17,12 +17,10 @@ import { loadState, loadUfs } from '../../api/api';
 export default function Chat() {
 
     const [step, setStep] = useState(0)
-
     const [uf, setUf] = useState([])
-
     const [state, setState] = useState([])
-
     const endDiv = useRef(null)
+
     const ScrollToFinalDiv = () => {
         if (endDiv) {
             endDiv.current.scrollIntoView({ behavior: "smooth" })
@@ -30,13 +28,9 @@ export default function Chat() {
     }
 
     const schemas = [stepOne, stepUf, stepTwo, stepTree, stepFour]
-
     const [currentSchema, setSchema] = useState(schemas[step])
-
     const [userInfo, setUserInfo] = useState({ name: '' })
-
     const [history, setHistory] = useState([])
-
     const Questions = [
         {
             question: `Olá, eu sou ChatNilson, tudo bem? Para começarmos, preciso saber seu nome.`,
@@ -78,30 +72,21 @@ export default function Chat() {
         },
     ]
 
-
     const getKey = () => {
         return Questions[step].key
     }
-
     const saveInfo = (key, value) => {
         setUserInfo({ ...userInfo, [key]: value })
-
     }
-
     const chatHistory = (value) => {
-
         setHistory((history) => [...history, { question: Questions[step].question, awnser: value }])
-
     }
-
     const nextSchema = () => {
         setSchema(schemas[step + 1])
     }
-
     const nextStep = () => {
         setStep(step + 1)
     }
-
     const hasMoreInfoInput = () => {
         return getKey() !== undefined
     }
@@ -110,17 +95,13 @@ export default function Chat() {
         loadUfs().then(response => setUf((uf) => [...uf, response]))
     }
         , [])
-
     useEffect(ScrollToFinalDiv, [step]);
-
     useEffect(() => {
         if (userInfo.uf) {
             loadState(userInfo.uf).then(response => setState((state) => [...state, response]))
         }
-
     }
         , [userInfo])
-
 
     const onSubmit = (values) => {
 
@@ -129,7 +110,6 @@ export default function Chat() {
         nextStep()
         nextSchema()
     }
-
     return (
         <div className="ChatWrapper" >
             <div className="ChatContainer">
@@ -152,7 +132,7 @@ export default function Chat() {
                         }}>
 
 
-                            <div className="teste" >
+                            <div className="history" >
 
                                 {history.map((value, index) => (
                                     <div key={index}>
