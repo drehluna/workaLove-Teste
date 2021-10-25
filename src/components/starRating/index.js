@@ -19,7 +19,7 @@ const StarRating = ({ value, userinfos, saveInfo }) => {
 
     useEffect(() => {
         saveInfo('rating', rating)
-    }, [rating])
+    }, [rating, saveInfo])
 
     const onSubmit = () => {
 
@@ -50,9 +50,9 @@ const StarRating = ({ value, userinfos, saveInfo }) => {
                     />
                 ))}
             </div>
-            
-            {send ? <span className="SpanFinalizado">Suas respostas foram salvas, obrigado.</span> 
-            : <button onClick={onSubmit} className="StarSendButton">Enviar</button>}
+
+            {send ? <span className="SpanFinalizado">Suas respostas foram salvas, obrigado.</span>
+                : <button onClick={onSubmit} className="StarSendButton">Enviar</button>}
         </div>
     );
 };

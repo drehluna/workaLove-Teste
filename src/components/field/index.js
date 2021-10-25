@@ -1,6 +1,5 @@
 
 import { useField } from 'formik'
-import { array } from 'yup/lib/locale';
 
 import './style.css'
 

@@ -24,14 +24,16 @@ export default function Chat() {
 
     const endDiv = useRef(null)
     const ScrollToFinalDiv = () => {
-        endDiv.current.scrollIntoView({ behavior: "smooth" })
+        if (endDiv) {
+            endDiv.current.scrollIntoView({ behavior: "smooth" })
+        }
     }
-    
-    const schemas = [stepOne,stepUf ,stepTwo, stepTree, stepFour]
+
+    const schemas = [stepOne, stepUf, stepTwo, stepTree, stepFour]
 
     const [currentSchema, setSchema] = useState(schemas[step])
 
-    const [userInfo, setUserInfo] = useState({name: ''})
+    const [userInfo, setUserInfo] = useState({ name: '' })
 
     const [history, setHistory] = useState([])
 
@@ -40,7 +42,7 @@ export default function Chat() {
             question: `Olá, eu sou ChatNilson, tudo bem? Para começarmos, preciso saber seu nome.`,
             key: 'name',
             inputMetaData: {
-                name: 'nomeesobrenome', type: '', placeholder: 'Digite seu nome', component: 'input', options: [], list: "" 
+                name: 'nomeesobrenome', type: '', placeholder: 'Digite seu nome', component: 'input', options: [], list: ""
             }
         },
         {
@@ -61,7 +63,7 @@ export default function Chat() {
             question: 'Legal, agora que sabemos sua cidade e estado. Quando foi que você nasceu',
             key: 'data',
             inputMetaData: {
-                name: 'data', type: 'date', placeholder: '', component: 'input', options: [], list: "" 
+                name: 'data', type: 'date', placeholder: '', component: 'input', options: [], list: ""
             }
         },
         {
@@ -75,21 +77,21 @@ export default function Chat() {
             question: 'Você finalizou o teste, faça uma avaliação sobre o processo que realizou até aqui. Nós agradecemos.'
         },
     ]
-    
+
 
     const getKey = () => {
-       return Questions[step].key
+        return Questions[step].key
     }
 
     const saveInfo = (key, value) => {
-        setUserInfo({...userInfo, [key]: value})
-        
+        setUserInfo({ ...userInfo, [key]: value })
+
     }
 
     const chatHistory = (value) => {
 
-        setHistory((history) => [...history, {question: Questions[step].question, awnser: value}])
-        
+        setHistory((history) => [...history, { question: Questions[step].question, awnser: value }])
+
     }
 
     const nextSchema = () => {
@@ -104,36 +106,29 @@ export default function Chat() {
         return getKey() !== undefined
     }
 
-    useEffect( () => {
+    useEffect(() => {
         loadUfs().then(response => setUf((uf) => [...uf, response]))
     }
-    , [])
+        , [])
 
     useEffect(ScrollToFinalDiv, [step]);
 
     useEffect(() => {
-        if(userInfo.uf) {
+        if (userInfo.uf) {
             loadState(userInfo.uf).then(response => setState((state) => [...state, response]))
         }
 
     }
-    , [userInfo])
+        , [userInfo])
 
-    
 
-    function onSubmit(values) {
-        
+    const onSubmit = (values) => {
+
         saveInfo(getKey(), values[Questions[step].inputMetaData.name])
         chatHistory(values[Questions[step].inputMetaData.name])
         nextStep()
         nextSchema()
     }
-
-    console.log(step)
-
-    console.log(userInfo)
-
-
 
     return (
         <div className="ChatWrapper" >
@@ -161,20 +156,20 @@ export default function Chat() {
 
                                 {history.map((value, index) => (
                                     <div key={index}>
-                                    <AvatarText text={value.question}/>
-                                    <Respostas text={value.awnser}/>
+                                        <AvatarText text={value.question} />
+                                        <Respostas text={value.awnser} />
                                     </div>
                                 ))}
-                                <AvatarText text={Questions[step].question}/>
+                                <AvatarText text={Questions[step].question} />
 
 
-                                <div  ref={endDiv}/>
+                                <div ref={endDiv} />
 
                             </div >
 
 
 
-                            {!hasMoreInfoInput() ? <StarRating userinfos={userInfo} saveInfo={saveInfo}/> :
+                            {!hasMoreInfoInput() ? <StarRating userinfos={userInfo} saveInfo={saveInfo} /> :
 
                                 <Field
 
