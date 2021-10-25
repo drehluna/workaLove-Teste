@@ -20,6 +20,7 @@
 
 .teste {
     overflow-x: scroll;
-    max-height: 20em;
+    max-height: 25em;
+    background-color: red;
 }
 

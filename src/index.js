@@ -6,9 +6,7 @@ import { StarRatingProvider } from './context/starRatingContext';
 
 ReactDOM.render(
   <React.StrictMode>
-  <StarRatingProvider>
     <App />
-    </StarRatingProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

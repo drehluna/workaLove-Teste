@@ -1,13 +1,16 @@
 
 .RepostasWrapper {
     display: flex;
-    justify-content: right;
+    justify-content: flex-end;
+    margin-right: 1em;
 }
 
 .Resposta {
 
 
     padding: 14px;
-    background-color: aqua;
+    background-color: #5C7AEA;
+    border-radius: 8px;
+    color: #FFF;
 
 }

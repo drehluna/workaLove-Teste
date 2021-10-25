@@ -18,9 +18,9 @@ export default function Chat() {
 
     const [step, setStep] = useState(0)
 
-    const [uf] = useState([])
+    const [uf, setUf] = useState([])
 
-    const [state] = useState([])
+    const [state, setState] = useState([])
 
     const endDiv = useRef(null)
     const ScrollToFinalDiv = () => {
@@ -32,48 +32,50 @@ export default function Chat() {
     const [currentSchema, setSchema] = useState(schemas[step])
 
     const [userInfo, setUserInfo] = useState({name: ''})
-    const [history] = useState([])
 
-    const DataToInput = [
-        { name: 'nomeesobrenome', type: '', placeholder: 'Digite seu nome', component: 'input', options: [], list: "" },
-        { name: 'uf', type: '', placeholder: 'Qual seu estado', component: 'input', options: uf, list: "city-list"  },
-        { name: 'cidade', type: '', placeholder: 'Qual sua cidade', component: 'input', options: state, list: "city-list" },
-        { name: 'data', type: 'date', placeholder: '', component: 'input', options: [], list: "" },
-        { name: 'email', type: 'email', placeholder: '', component: 'input', options: [], list: "" },
-    ]
+    const [history, setHistory] = useState([])
+
     const Questions = [
         {
             question: `Olá, eu sou ChatNilson, tudo bem? Para começarmos, preciso saber seu nome.`,
-            awnser: '',
-            key: 'name'
+            key: 'name',
+            inputMetaData: {
+                name: 'nomeesobrenome', type: '', placeholder: 'Digite seu nome', component: 'input', options: [], list: "" 
+            }
         },
         {
-            question: `Que satisfação ${userInfo.name}. Agora que sei seu nome, qual cidade que você mora`,
-            awnser: '',
-            key: 'city'
+            question: `Que satisfação ${userInfo.name}. Agora que sei seu nome, qual estado que você mora`,
+            key: 'uf',
+            inputMetaData: {
+                name: 'uf', type: '', placeholder: 'Qual seu estado', component: 'input', options: uf, list: "city-list"
+            }
         },
         {
-            question: 'Me informe o estado que você mora',
-            awnser: '',
-            key: 'uf'
+            question: 'Me informe a cidade que você mora',
+            key: 'city',
+            inputMetaData: {
+                name: 'cidade', type: '', placeholder: 'Qual sua cidade', component: 'input', options: state, list: "city-list"
+            }
         },
         {
             question: 'Legal, agora que sabemos sua cidade e estado. Quando foi que você nasceu',
-            awnser: '',
-            key: 'data'
+            key: 'data',
+            inputMetaData: {
+                name: 'data', type: 'date', placeholder: '', component: 'input', options: [], list: "" 
+            }
         },
         {
             question: `Agora me fala teu e-mail por gentileza`,
-            awnser: '',
-            key: 'email'
+            key: 'email',
+            inputMetaData: {
+                name: 'email', type: 'email', placeholder: '', component: 'input', options: [], list: ""
+            }
         },
         {
             question: 'Você finalizou o teste, faça uma avaliação sobre o processo que realizou até aqui. Nós agradecemos.'
         },
     ]
-
     
-
 
     const getKey = () => {
        return Questions[step].key
@@ -85,7 +87,9 @@ export default function Chat() {
     }
 
     const chatHistory = (value) => {
-        history.push({question: Questions[step].question, awnser: value})
+
+        setHistory((history) => [...history, {question: Questions[step].question, awnser: value}])
+        
     }
 
     const nextSchema = () => {
@@ -100,23 +104,18 @@ export default function Chat() {
         return getKey() !== undefined
     }
 
-    useEffect(async () => {
+    useEffect( () => {
 
-        const ufData = await loadUfs()
-        uf.push(ufData)
+        loadUfs().then(response => setUf((uf) => [...uf, response]))
         
     }
     , [])
 
     useEffect(ScrollToFinalDiv, [step]);
 
-    useEffect(async () => {
-
-        if(userInfo.city) {
-            console.log('entrou aqui')
-            const stateData = await loadState(userInfo.city)
-            state.push(stateData)
-            console.log(state[0][0].nome)
+    useEffect(() => {
+        if(userInfo.uf) {
+            loadState(userInfo.uf).then(response => setState((state) => [...state, response]))
         }
 
     }
@@ -125,8 +124,9 @@ export default function Chat() {
     
 
     function onSubmit(values) {
-        saveInfo(getKey(), values[DataToInput[step].name])
-        chatHistory(values[DataToInput[step].name])
+        
+        saveInfo(getKey(), values[Questions[step].inputMetaData.name])
+        chatHistory(values[Questions[step].inputMetaData.name])
         nextStep()
         nextSchema()
     }
@@ -180,12 +180,12 @@ export default function Chat() {
 
                                 <Field
 
-                                    name={DataToInput[step].name}
-                                    placeholder={DataToInput[step].placeholder}
-                                    component={DataToInput[step].component}
-                                    type={DataToInput[step].type}
-                                    options={DataToInput[step].options}
-                                    list={DataToInput[step].list}
+                                    name={Questions[step].inputMetaData.name}
+                                    placeholder={Questions[step].inputMetaData.placeholder}
+                                    component={Questions[step].inputMetaData.component}
+                                    type={Questions[step].inputMetaData.type}
+                                    options={Questions[step].inputMetaData.options}
+                                    list={Questions[step].inputMetaData.list}
 
 
 
