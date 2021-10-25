@@ -18,3 +18,7 @@ Com componentes de StarRating ao final da aplicação onde de forma simples pode
 * Yup -> Yup é a tecnologia que pode ser agregada ao react para validação dos campos pedidos. Foi utilizado juntamente com o Formik.
 
 * Axios -> Axios foi utilizado para realizar as conexoes HTTP para as Api's.
+
+# Deploy
+
+https://workalovefront.herokuapp.com/
