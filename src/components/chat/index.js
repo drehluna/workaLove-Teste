@@ -130,10 +130,7 @@ export default function Chat() {
                             e.preventDefault()
                             handleSubmit()
                         }}>
-
-
                             <div className="history" >
-
                                 {history.map((value, index) => (
                                     <div key={index}>
                                         <AvatarText text={value.question} />
@@ -141,27 +138,16 @@ export default function Chat() {
                                     </div>
                                 ))}
                                 <AvatarText text={Questions[step].question} />
-
-
                                 <div ref={endDiv} />
-
                             </div >
-
-
-
                             {!hasMoreInfoInput() ? <StarRating userinfos={userInfo} saveInfo={saveInfo} /> :
-
                                 <Field
-
                                     name={Questions[step].inputMetaData.name}
                                     placeholder={Questions[step].inputMetaData.placeholder}
                                     component={Questions[step].inputMetaData.component}
                                     type={Questions[step].inputMetaData.type}
                                     options={Questions[step].inputMetaData.options}
                                     list={Questions[step].inputMetaData.list}
-
-
-
                                 />}
                         </form>
                     )} />
