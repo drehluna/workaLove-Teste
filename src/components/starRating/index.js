@@ -18,7 +18,7 @@ const StarRating = ({ value, userinfos, saveInfo }) => {
 
     useEffect(() => {
         saveInfo('rating', rating)
-    }, [rating, saveInfo])
+    }, [rating])
 
     const onSubmit = () => {
 
