@@ -1,7 +1,7 @@
 import axios from "axios"
 
 export const apiMock = axios.create({
-    baseURL: 'https://617323d6110a740017222fa5.mockapi.io/FinalData'
+    baseURL: 'https://617323d6110a740017222fa5.mockapi.io/'
 })
 
 export const loadUfs = async () => {

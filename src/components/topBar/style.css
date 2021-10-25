@@ -1,12 +1,5 @@
 .TopBarContainer {
     padding: 30px;
     background-color: #AEB5C2;
-}
-
-.TopBarContainer span {
-    font-weight: bold;
-}
-
-.TopBarContainer span img {
-    margin-right: 30px;
+    
 }

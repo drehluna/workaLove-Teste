@@ -174,7 +174,7 @@ export default function Chat() {
 
 
 
-                            {!hasMoreInfoInput() ? <StarRating /> :
+                            {!hasMoreInfoInput() ? <StarRating userinfos={userInfo} saveInfo={saveInfo}/> :
 
                                 <Field
 

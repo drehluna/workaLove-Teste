@@ -6,10 +6,8 @@ import { StarRatingProvider } from './context/starRatingContext';
 function App() {
   return (
     <div className="Container">
-        <TopBar/>
-        <StarRatingProvider>
-        <Chat/>
-        </StarRatingProvider>
+      <TopBar />
+      <Chat />
     </div>
   );
 }
