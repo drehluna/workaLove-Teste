@@ -73,11 +73,15 @@ input:focus {
         width: 25em;
     }
     .InputUserWrapper span {
-        left: 2em;
+        
+        top: 28em;
+       left: 0em;
+        
     }
 
     .InputUserContainer button {
         margin-left: -5em;
+        z-index: 5;
     }
 } 
 
@@ -86,4 +90,5 @@ input:focus {
     input {
         width: 17em;
     }
+    
 }
